@@ -7,7 +7,8 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 
 const data = {
     name: 'Vasanth Srivatsa',
-    username: ['vasanthdeveloper', 'Vasanth Developer'],
+    username: 'Vasanth Developer',
+    email: 'vasanth@vasanthdeveloper.com',
     bio: 'Love 💻 computers and makes educational 📹 videos on YouTube.',
     social: {
         YouTube: 'https://youtube.com/vasanthdeveloper',

@@ -4,9 +4,6 @@
     "version": "0.0.0",
     "license": "UNLICENSED",
     "type": "commonjs",
-    "engines": {
-        "node": ">=14.x"
-    },
     "author": {
         "name": "Vasanth Developer",
         "email": "vasanth@vasanthdeveloper.com",
@@ -15,6 +12,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/vasanthdeveloper/mahat.git"
+    },
+    "scripts": {
+        "docs": "node scripts/docs.js"
     },
     "dependencies": {
         "@octokit/rest": "^18.5.3",
@@ -33,6 +33,7 @@
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
+        "glob": "^7.1.6",
         "prettier": "^2.2.1",
         "typescript": "^3.9.3",
         "vercel": "^22.0.1"

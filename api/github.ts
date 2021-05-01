@@ -1,5 +1,6 @@
 /*
- *  Responds with a sorted list of latest projects from GitHub.
+ *  List of projects I'm working on, organizations I've created.
+ *  4 hours
  *  Created On 01 May 2021
  */
 

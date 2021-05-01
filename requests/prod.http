@@ -1,7 +1,0 @@
-# Sends a request to fetch basic profile information
-GET https://api.vasanthdeveloper.com
-
-###
-
-# Sends a list of latest YouTube videos
-GET https://api.vasanthdeveloper.com/videos

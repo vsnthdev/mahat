@@ -1,5 +1,6 @@
 /*
- *  Respond with critical profile information.
+ *  Responds with my personal information.
+ *  1 day
  *  Created On 21 April 2021
  */
 
@@ -22,6 +23,6 @@ const data = {
 export default (req: VercelRequest, res: VercelResponse): VercelResponse => {
     if (req.url != '/') return res.redirect(308, '/')
 
-    res.setHeader('cache-control', 'public, max-age=3600')
+    res.setHeader('cache-control', 'public, max-age=86400')
     return res.status(200).json(data)
 }

@@ -1,5 +1,6 @@
 /*
- *  Responds with a feed of my latest videos.
+ *  Feed of my latest YouTube videos.
+ *  1 hour
  *  Created On 22 April 2021
  */
 

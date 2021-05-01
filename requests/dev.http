@@ -1,7 +1,0 @@
-# Sends a request to fetch basic profile information
-GET http://localhost:3000
-
-###
-
-# Sends a list of latest YouTube videos
-GET http://localhost:3000/videos

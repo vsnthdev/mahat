@@ -31,6 +31,6 @@
         "eslint-plugin-simple-import-sort": "^7.0.0",
         "prettier": "^2.2.1",
         "typescript": "^3.9.3",
-        "vercel": "^21.3.3"
+        "vercel": "^22.0.1"
     }
 }

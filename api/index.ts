@@ -9,6 +9,13 @@ const data = {
     name: 'Vasanth Srivatsa',
     username: ['vasanthdeveloper', 'Vasanth Developer'],
     bio: 'Love 💻 computers and makes educational 📹 videos on YouTube.',
+    social: {
+        YouTube: 'https://youtube.com/vasanthdeveloper',
+        Twitter: 'https://twitter.com/vasanthdevelop',
+        GitHub: 'https://github.com/vasanthdeveloper',
+        Discord: 'https://vas.cx/discord',
+        Telegram: 'https://t.me/vasanthdeveloper',
+    },
 }
 
 export default (req: VercelRequest, res: VercelResponse): VercelResponse => {

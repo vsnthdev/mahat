@@ -5,6 +5,7 @@
         { "source": "/", "destination": "/api" },
         { "source": "/videos", "destination": "/api/videos" },
         { "source": "/github", "destination": "/api/github" },
+        { "source": "/twitter", "destination": "/api/twitter" },
         { "source": "/(.*)", "destination": "/api/404" }
     ],
     "redirects": [

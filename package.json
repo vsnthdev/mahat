@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@octokit/rest": "^18.5.3",
+        "axios": "^0.21.1",
         "filesize": "^6.3.0",
         "open-graph-scraper": "^4.8.2",
         "rss-to-json": "^1.1.3",

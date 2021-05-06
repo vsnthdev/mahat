@@ -14,10 +14,10 @@ export const data = {
     bio: 'Love 💻 computers and makes educational 📹 videos on YouTube.',
     avatar: null,
     social: {
-        youtube: 'vasanthdeveloper',
-        twitter: 'vasanthdevelop',
-        github: 'vasanthdeveloper',
-        telegram: 'vasanthdeveloper',
+        youtube: 'https://youtube.com/vasanthdeveloper',
+        twitter: 'https://twitter.com/vasanthdevelop',
+        github: 'https://github.com/vasanthdeveloper',
+        telegram: 'https://t.me/vasanthdeveloper',
     },
 }
 
@@ -38,7 +38,7 @@ export default async (
     })
 
     const profile = await twitter.accountsAndUsers.usersLookup({
-        screen_name: data.social.twitter,
+        screen_name: data.social.twitter.split('/').pop(),
     })
 
     data.avatar = profile[0].profile_image_url_https.replace(

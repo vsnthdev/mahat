@@ -9,7 +9,7 @@ import { TwitterClient } from 'twitter-api-client'
 
 export const data = {
     name: 'Vasanth Srivatsa',
-    username: 'Vasanth Developer',
+    displayName: 'Vasanth Developer',
     email: 'vasanth@vasanthdeveloper.com',
     bio: 'Love 💻 computers and makes educational 📹 videos on YouTube.',
     avatar: null,

@@ -12,7 +12,8 @@ export default async (
     req: VercelRequest,
     res: VercelResponse,
 ): Promise<VercelResponse> => {
-    if (req.url != '/twitter') return res.redirect(308, '/twitter')
+    if (req.url.startsWith('/twitter') == false)
+        return res.redirect(308, '/twitter')
 
     // fetch the Twitter tweets from
     // my Discord channel's tweets channel

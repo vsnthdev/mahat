@@ -11,7 +11,7 @@ export const data = {
     name: 'Vasanth Srivatsa',
     displayName: 'Vasanth Developer',
     email: 'vasanth@vasanthdeveloper.com',
-    bio: 'Love 💻 computers and makes educational 📹 videos on YouTube.',
+    bio: 'Loves 💻 computers and makes educational 📹 videos on YouTube.',
     avatar: null,
     social: {
         youtube: 'https://youtube.com/vasanthdeveloper',
@@ -25,7 +25,7 @@ export default async (
     req: VercelRequest,
     res: VercelResponse,
 ): Promise<VercelResponse> => {
-    if (req.url != '/') return res.redirect(308, '/')
+    if (req.url.startsWith('/') == false) return res.redirect(308, '/')
 
     res.setHeader('cache-control', 'public, max-age=86400')
 

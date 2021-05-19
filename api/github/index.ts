@@ -16,7 +16,8 @@ export default async (
     req: VercelRequest,
     res: VercelResponse,
 ): Promise<VercelResponse> => {
-    if (req.url != '/github') return res.redirect(308, '/github')
+    if (req.url.startsWith('/github') == false)
+        return res.redirect(308, '/github')
 
     // Cache the response for next 4 hours
     res.setHeader('cache-control', 'public, max-age=14400')

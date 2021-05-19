@@ -1,5 +1,6 @@
 /*
  *  Curated feed of my Twitter tweets and threads.
+ *  1 hour
  *  Created On 02 May 2021
  */
 
@@ -14,6 +15,9 @@ export default async (
 ): Promise<VercelResponse> => {
     if (req.url.startsWith('/twitter') == false)
         return res.redirect(308, '/twitter')
+
+    // cache policy
+    res.setHeader('cache-control', 'public, max-age=3600')
 
     // fetch the Twitter tweets from
     // my Discord channel's tweets channel

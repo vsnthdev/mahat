@@ -5,6 +5,7 @@
  */
 
 import { VercelRequest, VercelResponse } from '@vercel/node'
+import Joi from 'joi'
 import { TwitterClient } from 'twitter-api-client'
 
 export const data = {
@@ -21,6 +22,10 @@ export const data = {
     },
 }
 
+const querySchema = Joi.object({
+    avatar: Joi.bool().default(false),
+})
+
 export default async (
     req: VercelRequest,
     res: VercelResponse,
@@ -28,6 +33,9 @@ export default async (
     if (req.url.startsWith('/') == false) return res.redirect(308, '/')
 
     res.setHeader('cache-control', 'public, max-age=86400')
+
+    // parse query arguments
+    const query = await querySchema.validateAsync(req.query)
 
     // create an authenticated Twitter client
     const twitter = new TwitterClient({
@@ -46,5 +54,6 @@ export default async (
         '_400x400',
     )
 
+    if (query.avatar) return res.redirect(data.avatar)
     return res.status(200).json(data)
 }

@@ -14,7 +14,8 @@
         "url": "https://github.com/vasanthdeveloper/mahat.git"
     },
     "scripts": {
-        "docs": "node scripts/docs.js"
+        "docs": "node scripts/docs.js",
+        "deploy": "node scripts/docs.js && vercel --prod"
     },
     "allowed": [
         "http://localhost:2020",

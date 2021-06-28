@@ -2,13 +2,54 @@
     "cleanUrls": true,
     "trailingSlash": false,
     "rewrites": [
-        { "source": "/", "destination": "/api" },
-        { "source": "/videos", "destination": "/api/videos" },
-        { "source": "/github", "destination": "/api/github" },
-        { "source": "/twitter", "destination": "/api/twitter" },
-        { "source": "/(.*)", "destination": "/api/404" }
+        {
+            "source": "/",
+            "destination": "/api"
+        },
+        {
+            "source": "/videos",
+            "destination": "/api/videos"
+        },
+        {
+            "source": "/github",
+            "destination": "/api/github"
+        },
+        {
+            "source": "/twitter",
+            "destination": "/api/twitter"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/api/404"
+        }
     ],
     "redirects": [
-        { "source": "(.*).(.*)", "destination": "/404"}
+        {
+            "source": "(.*).(.*)",
+            "destination": "/404"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                },
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "http://localhost:2020"
+                },
+                {
+                    "key": "Access-Control-Allow-Methods",
+                    "value": "GET"
+                },
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+                }
+            ]
+        }
     ]
 }

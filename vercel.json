@@ -38,10 +38,6 @@
                     "value": "true"
                 },
                 {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "http://localhost:2020"
-                },
-                {
                     "key": "Access-Control-Allow-Methods",
                     "value": "GET"
                 },

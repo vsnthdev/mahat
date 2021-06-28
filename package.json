@@ -16,30 +16,35 @@
     "scripts": {
         "docs": "node scripts/docs.js"
     },
+    "allowed": [
+        "http://localhost:2020",
+        "http://192.168.0.101:2020",
+        "https://twrm.io"
+    ],
     "dependencies": {
-        "@octokit/rest": "^18.5.3",
+        "@octokit/rest": "^18.6.3",
         "axios": "^0.21.1",
         "filesize": "^6.3.0",
         "joi": "^17.4.0",
-        "open-graph-scraper": "^4.8.2",
+        "open-graph-scraper": "^4.9.0",
         "rss-to-json": "^1.1.3",
         "twitter-api-client": "^1.3.8"
     },
     "devDependencies": {
         "@types/joi": "^17.2.3",
-        "@types/node": "^14.14.41",
-        "@types/open-graph-scraper": "^4.7.0",
-        "@typescript-eslint/eslint-plugin": "^4.22.0",
-        "@typescript-eslint/parser": "^4.22.0",
-        "@vercel/node": "^1.9.1",
-        "eslint": "^7.24.0",
-        "eslint-config-prettier": "^8.2.0",
-        "eslint-plugin-import": "^2.22.1",
+        "@types/node": "^15.12.5",
+        "@types/open-graph-scraper": "^4.8.0",
+        "@typescript-eslint/eslint-plugin": "^4.28.1",
+        "@typescript-eslint/parser": "^4.28.1",
+        "@vercel/node": "^1.11.1",
+        "eslint": "^7.29.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.23.4",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
-        "glob": "^7.1.6",
-        "prettier": "^2.2.1",
-        "typescript": "^3.9.3",
-        "vercel": "^22.0.1"
+        "glob": "^7.1.7",
+        "prettier": "^2.3.2",
+        "typescript": "^4.3.4",
+        "vercel": "^23.0.1"
     }
 }

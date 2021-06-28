@@ -7,6 +7,8 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import axios from 'axios'
 
+import { caching, cors } from './index'
+
 const CHANNEL = '801896274197741568'
 
 export default async (
@@ -16,8 +18,9 @@ export default async (
     if (req.url.startsWith('/twitter') == false)
         return res.redirect(308, '/twitter')
 
-    // cache policy
-    res.setHeader('cache-control', 'public, max-age=3600')
+    // work on headers
+    caching(res, 3600)
+    await cors(req, res)
 
     // fetch the Twitter tweets from
     // my Discord channel's tweets channel

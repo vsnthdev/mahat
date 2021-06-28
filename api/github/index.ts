@@ -7,6 +7,7 @@
 import { Octokit } from '@octokit/rest'
 import { VercelRequest, VercelResponse } from '@vercel/node'
 
+import { caching, cors } from '../index'
 import loop from './loop'
 
 // GitHub username
@@ -19,8 +20,9 @@ export default async (
     if (req.url.startsWith('/github') == false)
         return res.redirect(308, '/github')
 
-    // Cache the response for next 4 hours
-    res.setHeader('cache-control', 'public, max-age=14400')
+    // set proper response headers
+    caching(res, 14400)
+    await cors(req, res)
 
     // initialize a new GitHub API class
     // while passing in the token

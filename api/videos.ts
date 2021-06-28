@@ -8,6 +8,8 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 import Joi from 'joi'
 import reader from 'rss-to-json'
 
+import { caching, cors } from './index'
+
 // YouTube Channel ID
 const ID = 'UCo6K7mx7gWKbXbpQAMrvFwg'
 
@@ -22,8 +24,9 @@ export default async (
     if (req.url.startsWith('/videos') == false)
         return res.redirect(308, '/videos')
 
-    // cache policy
-    res.setHeader('cache-control', 'public, max-age=3600')
+    // set headers properly
+    caching(res, 3600)
+    await cors(req, res)
 
     // parse query arguments
     const query = await querySchema.validateAsync(req.query)

@@ -5,7 +5,9 @@
  */
 
 import { VercelRequest, VercelResponse } from '@vercel/node'
+import fs from 'fs/promises'
 import Joi from 'joi'
+import path from 'path'
 import { TwitterClient } from 'twitter-api-client'
 
 export const data = {
@@ -22,6 +24,24 @@ export const data = {
     },
 }
 
+export const cors = async (
+    { headers: { origin } }: VercelRequest,
+    res: VercelResponse,
+): Promise<any> => {
+    const { allowed }: { allowed: string[] } = JSON.parse(
+        await fs.readFile(path.join(__dirname, '..', 'package.json'), 'utf-8'),
+    )
+
+    if (allowed.includes(origin)) {
+        return res.setHeader('Access-Control-Allow-Origin', origin)
+    } else {
+        return res.setHeader('Access-Control-Allow-Origin', 'deny')
+    }
+}
+
+export const caching = (res: VercelResponse, expiry: number): any =>
+    res.setHeader('Cache-Control', `'public, max-age=${expiry.toString()}'`)
+
 const querySchema = Joi.object({
     avatar: Joi.bool().default(false),
 })
@@ -32,7 +52,9 @@ export default async (
 ): Promise<VercelResponse> => {
     if (req.url.startsWith('/') == false) return res.redirect(308, '/')
 
-    res.setHeader('cache-control', 'public, max-age=86400')
+    // set headers properly
+    caching(res, 86400)
+    await cors(req, res)
 
     // parse query arguments
     const query = await querySchema.validateAsync(req.query)

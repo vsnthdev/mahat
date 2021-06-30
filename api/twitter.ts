@@ -1,13 +1,12 @@
 /*
  *  Curated feed of my Twitter tweets and threads.
- *  1 hour
  *  Created On 02 May 2021
  */
 
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import axios from 'axios'
 
-import { caching, cors } from './index'
+import { cors } from './index'
 
 const CHANNEL = '801896274197741568'
 
@@ -19,7 +18,6 @@ export default async (
         return res.redirect(308, '/twitter')
 
     // work on headers
-    caching(res, 3600)
     await cors(req, res)
 
     // fetch the Twitter tweets from

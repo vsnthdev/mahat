@@ -8,7 +8,9 @@ const glob = require('glob')
 const path = require('path')
 const fs = require('fs/promises')
 
-const files = glob.sync(path.join(__dirname, '..', 'api', '*.ts'))
+let files = glob
+    .sync(path.join(__dirname, '..', 'api', '*.ts'))
+    .concat(glob.sync(path.join(__dirname, '..', 'api', '**', 'index.ts')))
 const src = path.join(path.join(__dirname, '..', 'README.template.md'))
 const dest = path.join(path.join(__dirname, '..', 'README.md'))
 
@@ -18,6 +20,10 @@ const dest = path.join(path.join(__dirname, '..', 'README.md'))
 const routes = async template => {
     let data = []
     let render = ''
+
+    // remove the first element as it's a
+    // duplicate of index.js
+    files = Array.from(new Set(files))
 
     for (const file of files) {
         // skip 404
@@ -32,18 +38,20 @@ const routes = async template => {
             .filter(line => line.startsWith('Created On') == false)
             .join('\n')
 
-        const cache = txt.split('\n').pop().trim()
+        const description = txt.split('\n').pop().trim()
 
         txt = txt.split('\n').splice(0, 1).join('\n')
 
-        const name =
-            path.parse(file).name == 'index' ? '' : path.parse(file).name
+        const name = file
+            .substr(path.join(__dirname, '..', 'api').length + 1)
+            .split(path.sep)[0]
 
         data.push({
-            cache,
+            description,
             method: 'GET',
-            path: `/${name}`,
-            description: txt,
+            path: `/${
+                path.parse(name).name == 'index' ? '' : path.parse(name).name
+            }`,
         })
     }
 
@@ -62,7 +70,7 @@ const routes = async template => {
 
     for (const route of data)
         render = render.concat(
-            `| \`${route.method}\` | \`${route.path}\` | ${route.description} | ${route.cache} |\n`,
+            `| \`${route.method}\` | \`${route.path}\` | ${route.description} |\n`,
         )
 
     return template.replace('<!-- {routes} -->', render)

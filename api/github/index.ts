@@ -1,13 +1,12 @@
 /*
  *  List of projects I'm working on, organizations I've created.
- *  4 hours
  *  Created On 01 May 2021
  */
 
 import { Octokit } from '@octokit/rest'
 import { VercelRequest, VercelResponse } from '@vercel/node'
 
-import { caching, cors } from '../index'
+import { cors } from '../index'
 import loop from './loop'
 
 // GitHub username
@@ -21,7 +20,6 @@ export default async (
         return res.redirect(308, '/github')
 
     // set proper response headers
-    caching(res, 14400)
     await cors(req, res)
 
     // initialize a new GitHub API class

@@ -1,6 +1,5 @@
 /*
  *  Responds with my personal information.
- *  1 day
  *  Created On 21 April 2021
  */
 
@@ -39,9 +38,6 @@ export const cors = async (
     }
 }
 
-export const caching = (res: VercelResponse, expiry: number): any =>
-    res.setHeader('Cache-Control', `'public, max-age=${expiry.toString()}'`)
-
 const querySchema = Joi.object({
     avatar: Joi.bool().default(false),
 })
@@ -53,7 +49,6 @@ export default async (
     if (req.url.startsWith('/') == false) return res.redirect(308, '/')
 
     // set headers properly
-    caching(res, 86400)
     await cors(req, res)
 
     // parse query arguments

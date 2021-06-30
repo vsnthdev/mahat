@@ -1,6 +1,5 @@
 /*
  *  Feed of my latest YouTube videos.
- *  1 hour
  *  Created On 22 April 2021
  */
 
@@ -8,7 +7,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 import Joi from 'joi'
 import reader from 'rss-to-json'
 
-import { caching, cors } from './index'
+import { cors } from './index'
 
 // YouTube Channel ID
 const ID = 'UCo6K7mx7gWKbXbpQAMrvFwg'
@@ -25,7 +24,6 @@ export default async (
         return res.redirect(308, '/videos')
 
     // set headers properly
-    caching(res, 3600)
     await cors(req, res)
 
     // parse query arguments

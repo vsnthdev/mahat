@@ -17,7 +17,8 @@ export default async (
     github: Octokit,
 ): Promise<void> => {
     // we don't need to showcase forks
-    if (repo.fork) return
+    // or archived repositories
+    if (repo.fork || repo.archived) return
 
     const pushable = {
         name: repo.name,

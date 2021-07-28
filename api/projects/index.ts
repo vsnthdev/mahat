@@ -16,8 +16,8 @@ export default async (
     req: VercelRequest,
     res: VercelResponse,
 ): Promise<VercelResponse> => {
-    if (req.url.startsWith('/github') == false)
-        return res.redirect(308, '/github')
+    if (req.url.startsWith('/projects') == false)
+        return res.redirect(308, '/projects')
 
     // set proper response headers
     await cors(req, res)

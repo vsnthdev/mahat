@@ -14,8 +14,8 @@ export default async (
     req: VercelRequest,
     res: VercelResponse,
 ): Promise<VercelResponse> => {
-    if (req.url.startsWith('/twitter') == false)
-        return res.redirect(308, '/twitter')
+    if (req.url.startsWith('/tweets') == false)
+        return res.redirect(308, '/tweets')
 
     // work on headers
     await cors(req, res)

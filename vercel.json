@@ -11,12 +11,12 @@
             "destination": "/api/videos"
         },
         {
-            "source": "/github",
-            "destination": "/api/github"
+            "source": "/projects",
+            "destination": "/api/projects"
         },
         {
-            "source": "/twitter",
-            "destination": "/api/twitter"
+            "source": "/tweets",
+            "destination": "/api/tweets"
         },
         {
             "source": "/(.*)",

@@ -29,8 +29,9 @@ export default async (
     // parse query arguments
     const query = await querySchema.validateAsync(req.query)
 
-    const read = await reader.load(
+    const read = await reader(
         `https://www.youtube.com/feeds/videos.xml?channel_id=${ID}`,
+        {},
     )
 
     const returnable = {

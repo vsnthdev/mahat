@@ -13,8 +13,10 @@ export const data = {
     name: 'Vasanth Srivatsa',
     displayName: 'Vasanth Developer',
     email: 'vasanth@vasanthdeveloper.com',
-    bio: 'Loves 💻 computers and makes educational 📹 videos on YouTube.',
+    bio: null,
     avatar: null,
+    cover: null,
+    themeColor: null,
     social: {
         youtube: 'https://youtube.com/vasanthdeveloper',
         twitter: 'https://twitter.com/vasanthdevelop',
@@ -66,10 +68,20 @@ export default async (
         screen_name: data.social.twitter.split('/').pop(),
     })
 
+    // set the avatar URL
     data.avatar = profile[0].profile_image_url_https.replace(
         '_normal',
         '_400x400',
     )
+
+    // set the bio
+    data.bio = profile[0].description
+
+    // set the banner link
+    data.cover = profile[0].profile_banner_url
+
+    // set the theme color
+    data.themeColor = profile[0].profile_link_color
 
     if (query.avatar) return res.redirect(data.avatar)
     return res.status(200).json(data)

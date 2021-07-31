@@ -14,12 +14,14 @@
         "url": "https://github.com/vasanthdeveloper/mahat.git"
     },
     "scripts": {
-        "docs": "node scripts/docs.js",
-        "deploy": "node scripts/docs.js && vercel --prod"
+        "docs": "node scripts/docs.js"
+    },
+    "engines": {
+        "node": "14"
     },
     "allowed": [
-        "http://localhost:2020",
-        "http://192.168.0.101:2020",
+        "http://localhost:3000",
+        "http://192.168.0.101:3000",
         "https://twrm.io"
     ],
     "dependencies": {

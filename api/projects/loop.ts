@@ -11,11 +11,38 @@ import ogs from 'open-graph-scraper'
 
 import languages from './languages'
 
-export default async (
-    repo: any,
-    returnable: any,
-    github: Octokit,
-): Promise<void> => {
+const getImage = async ({
+    query,
+    repo: {
+        name,
+        owner: { login },
+    },
+}: {
+    query: any
+    repo: { name: string; owner: { login: string } }
+}): Promise<string | void> => {
+    // skip if extended is not true
+    if (query.extended != true) return
+
+    // construct the URL
+    const { result: og } = await ogs({
+        url: `https://github.com/${login}/${name}`,
+    })
+
+    return og['ogImage'].url
+}
+
+export default async ({
+    github,
+    query,
+    repo,
+    returnable,
+}: {
+    github: Octokit
+    query: any
+    repo: any
+    returnable: any
+}): Promise<void> => {
     // we don't need to showcase forks
     // or archived repositories
     if (repo.fork || repo.archived) return
@@ -44,13 +71,10 @@ export default async (
         : (pushable['license'] = 'Unlicensed')
 
     // populate languages detected by GitHub
-    pushable['languages'] = await languages(repo.name, repo.owner.login, github)
+    pushable['languages'] = await languages({ github, query, repo })
 
     // populate the cover image by fetching from OpenGraph API
-    const { result: openGraph } = await ogs({
-        url: `https://github.com/${repo.owner.login}/${repo.name}`,
-    })
-    pushable.image = openGraph['ogImage'].url
+    pushable.image = await getImage({ query, repo })
 
     returnable.repositories.push(pushable)
 }

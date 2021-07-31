@@ -5,12 +5,17 @@
 
 import { Octokit } from '@octokit/rest'
 import { VercelRequest, VercelResponse } from '@vercel/node'
+import Joi from 'joi'
 
 import { cors } from '../index'
 import loop from './loop'
 
 // GitHub username
 const USER = 'vasanthdeveloper'
+
+const querySchema = Joi.object({
+    extended: Joi.bool().default(false),
+})
 
 export default async (
     req: VercelRequest,
@@ -21,6 +26,9 @@ export default async (
 
     // set proper response headers
     await cors(req, res)
+
+    // parse query arguments
+    const query = await querySchema.validateAsync(req.query)
 
     // initialize a new GitHub API class
     // while passing in the token
@@ -57,7 +65,10 @@ export default async (
     }
 
     // populate the repositories
-    for (const repo of repos) await loop(repo, returnable, github)
+    const queue = []
+    for (const repo of repos)
+        queue.push(loop({ github, query, repo, returnable }))
+    await Promise.all(queue)
 
     // populate the organizations
     for (const org of orgs)

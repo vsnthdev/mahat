@@ -19,9 +19,11 @@ export const data = {
     themeColor: null,
     social: {
         youtube: 'https://youtube.com/vasanthdeveloper',
-        twitter: 'https://twitter.com/vasanthdevelop',
-        github: 'https://github.com/vasanthdeveloper',
-        telegram: 'https://t.me/vasanthdeveloper',
+        twitter: 'https://twitter.com/vsnthdev',
+        discord: 'https://vas.cx/discord',
+        github: 'https://github.com/vsnthdev',
+        linkedin: 'https://linkedin.com/in/vsnthdev',
+        dribbble: 'https://dribbble.com/vsnthdev',
     },
 }
 

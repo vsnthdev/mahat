@@ -11,7 +11,7 @@ import { cors } from '../index'
 import loop from './loop'
 
 // GitHub username
-const USER = 'vasanthdeveloper'
+const USER = 'vsnthdev'
 
 const querySchema = Joi.object({
     extended: Joi.bool().default(false),

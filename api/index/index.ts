@@ -4,35 +4,24 @@
  */
 
 import { VercelRequest, VercelResponse } from '@vercel/node'
+import axios from 'axios'
 import fs from 'fs/promises'
 import Joi from 'joi'
+import yaml from 'js-yaml'
 import path from 'path'
 import { TwitterClient } from 'twitter-api-client'
 
-export const data = {
-    name: 'Vasanth Srivatsa',
-    displayName: 'Vasanth Developer',
-    email: 'vasanth@vasanthdeveloper.com',
-    bio: null,
-    avatar: null,
-    cover: null,
-    themeColor: null,
-    social: {
-        youtube: 'https://youtube.com/vasanthdeveloper',
-        twitter: 'https://twitter.com/vsnthdev',
-        discord: 'https://vas.cx/discord',
-        github: 'https://github.com/vsnthdev',
-        linkedin: 'https://linkedin.com/in/vsnthdev',
-        dribbble: 'https://dribbble.com/vsnthdev',
-    },
-}
+import { DataImpl } from './data'
 
 export const cors = async (
     { headers: { origin } }: VercelRequest,
     res: VercelResponse,
 ): Promise<any> => {
     const { allowed }: { allowed: string[] } = JSON.parse(
-        await fs.readFile(path.join(__dirname, '..', 'package.json'), 'utf-8'),
+        await fs.readFile(
+            path.join(__dirname, '..', '..', 'package.json'),
+            'utf-8',
+        ),
     )
 
     if (allowed.includes(origin)) {
@@ -45,6 +34,30 @@ export const cors = async (
 const querySchema = Joi.object({
     avatar: Joi.bool().default(false),
 })
+
+// create an authenticated Twitter client
+export const getTwitter = (): TwitterClient =>
+    new TwitterClient({
+        apiKey: process.env.TWITTER_API_KEY,
+        apiSecret: process.env.TWITTER_API_SECRET,
+        accessToken: process.env.TWITTER_ACCESS_KEY,
+        accessTokenSecret: process.env.TWITTER_ACCESS_SECRET,
+    })
+
+// resolve a vas.cx redirect and return the URL
+export const resolveRedirect = async (code: string): Promise<string> => {
+    const res = await axios({
+        method: 'GET',
+        url: `https://vas.cx/${code}`,
+    })
+
+    return path.parse(res.request.path).base
+}
+
+export const getData = async (): Promise<DataImpl> => {
+    const str = await fs.readFile(path.join(__dirname, 'profile.yml'), 'utf-8')
+    return yaml.load(str) as DataImpl
+}
 
 export default async (
     req: VercelRequest,
@@ -59,16 +72,19 @@ export default async (
     const query = await querySchema.validateAsync(req.query)
 
     // create an authenticated Twitter client
-    const twitter = new TwitterClient({
-        apiKey: process.env.TWITTER_API_KEY,
-        apiSecret: process.env.TWITTER_API_SECRET,
-        accessToken: process.env.TWITTER_ACCESS_KEY,
-        accessTokenSecret: process.env.TWITTER_ACCESS_SECRET,
+    const twitter = getTwitter()
+
+    // grab my current username dynamically
+    // by resolving vas.cx/twitter
+    const username = await resolveRedirect('twitter')
+
+    // get my profile information from Twitter
+    const profile = await twitter.accountsAndUsers.usersLookup({
+        screen_name: username,
     })
 
-    const profile = await twitter.accountsAndUsers.usersLookup({
-        screen_name: data.social.twitter.split('/').pop(),
-    })
+    // get data
+    const data = await getData()
 
     // set the avatar URL
     data.avatar = profile[0].profile_image_url_https.replace(

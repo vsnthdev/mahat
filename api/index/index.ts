@@ -93,7 +93,7 @@ export default async (
     )
 
     // set the bio
-    data.bio = profile[0].description
+    data.bio = profile[0].description.split(/[•|]+/g)[0].trim()
 
     // set the banner link
     data.cover = profile[0].profile_banner_url

@@ -22,7 +22,8 @@
     "allowed": [
         "http://localhost:3000",
         "http://192.168.0.101:3000",
-        "https://twrm.io"
+        "https://twrm.io",
+        "https://slides.vsnth.dev"
     ],
     "dependencies": {
         "@octokit/rest": "^18.12.0",

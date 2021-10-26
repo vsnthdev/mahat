@@ -19,7 +19,7 @@
     "engines": {
         "node": "14"
     },
-    "allowed": [
+    "cors": [
         "http://localhost:3000",
         "http://192.168.0.101:3000",
         "https://twrm.io",

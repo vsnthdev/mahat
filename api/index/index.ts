@@ -17,14 +17,14 @@ export const cors = async (
     { headers: { origin } }: VercelRequest,
     res: VercelResponse,
 ): Promise<any> => {
-    const { allowed }: { allowed: string[] } = JSON.parse(
+    const { cors }: { cors: string[] } = JSON.parse(
         await fs.readFile(
             path.join(__dirname, '..', '..', 'package.json'),
             'utf-8',
         ),
     )
 
-    if (allowed.includes(origin)) {
+    if (cors.includes(origin)) {
         return res.setHeader('Access-Control-Allow-Origin', origin)
     } else {
         return res.setHeader('Access-Control-Allow-Origin', 'deny')

@@ -14,6 +14,16 @@ let files = glob
 const src = path.join(path.join(__dirname, '..', 'README.template.md'))
 const dest = path.join(path.join(__dirname, '..', 'README.md'))
 
+const getRouteFromFilename = file => {
+    const parsed = path.parse(file)
+
+    if (parsed.name == 'index') {
+        return parsed.dir == 'index' ? '' : parsed.dir
+    } else {
+        return parsed.name
+    }
+}
+
 // getRoutes() will loop through each file
 // and read the file's header command to get
 // the description of that route.
@@ -49,9 +59,7 @@ const routes = async template => {
         data.push({
             description,
             method: 'GET',
-            path: `/${
-                path.parse(name).name == 'index' ? '' : path.parse(name).name
-            }`,
+            path: `/${getRouteFromFilename(name)}`,
         })
     }
 
@@ -80,7 +88,8 @@ const main = async () => {
     // read the src file
     const template = await fs.readFile(src, 'utf-8')
 
-    const render = await routes(template)
+    let render = await routes(template)
+    render = render.replace('<!-- {year} -->', new Date().getFullYear())
 
     // write the file back
     await fs.writeFile(dest, render, 'utf-8')

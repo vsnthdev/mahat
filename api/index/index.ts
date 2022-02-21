@@ -46,16 +46,15 @@ export const getTwitter = (): TwitterClient =>
 
 // resolve a vas.cx redirect and return the URL
 export const resolveRedirect = async (code: string): Promise<string> => {
-    const { data } = await axios({
-        method: 'GET',
-        url: `https://vas.cx/${code}`,
-    })
-
-    const url = data
-        .split('<meta http-equiv="refresh" content="0;URL=\'')[1]
-        .split("'")[0]
-
-    return path.parse(url).base
+    try {
+        await axios({
+            method: 'GET',
+            url: `https://vas.cx/${code}`,
+            maxRedirects: 0,
+        })
+    } catch ({ response: { status, headers } }) {
+        if (status == 307) return path.parse(headers.location).base
+    }
 }
 
 export const getData = async (): Promise<DataImpl> => {

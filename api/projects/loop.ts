@@ -49,7 +49,6 @@ export default async ({
 
     const pushable = {
         name: repo.name,
-        owner: repo.owner.login,
         description: repo.description,
         url: repo.html_url,
         size: size(repo.size),

@@ -50,7 +50,6 @@ export default async (
         sort: 'updated',
         visibility: 'public',
     })
-    const { data: orgs } = await github.orgs.listForAuthenticatedUser()
 
     // prepare the returnable response
     const returnable = {
@@ -60,7 +59,6 @@ export default async (
             projects,
             gists,
         },
-        organizations: [],
         repositories: [],
     }
 
@@ -69,14 +67,6 @@ export default async (
     for (const repo of repos)
         queue.push(loop({ github, query, repo, returnable }))
     await Promise.all(queue)
-
-    // populate the organizations
-    for (const org of orgs)
-        returnable.organizations.push({
-            name: org.login,
-            description: org.description,
-            avatar: org.avatar_url,
-        })
 
     return res.status(200).json(returnable)
 }

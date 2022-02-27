@@ -1,4 +1,14 @@
-<img src="https://raw.githubusercontent.com/vsnthdev/mahat/designs/renders/banner.png" alt="mahat"><br>
+<h5 align="center">
+    <a href="https://api.vsnth.dev#gh-light-mode-only" target="_blank" rel="noopener">
+        <img src="https://raw.githubusercontent.com/vsnthdev/mahat/designs/renders/logo_dark.svg" alt="mahat" height="60">
+    </a>
+    <a href="https://api.vsnth.dev#gh-dark-mode-only" target="_blank" rel="noopener">
+        <img src="https://raw.githubusercontent.com/vsnthdev/mahat/designs/renders/logo_light.svg" alt="mahat" height="60">
+    </a>
+</h5>
+
+<br>
+
 <p align="center"><strong>( महत् ) — The ✨ content delivery API ⚡️ for Vasanth Developer.</strong></p>
 
 ## ⚡️ Routes

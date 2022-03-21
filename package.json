@@ -23,6 +23,7 @@
         "http://localhost:3000",
         "http://192.168.0.101:3000",
         "https://twrm.io",
+        "https://twrm-git-nextjs-vsnthdev.vercel.app",
         "https://slides.vsnth.dev"
     ],
     "dependencies": {

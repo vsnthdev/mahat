@@ -22,6 +22,10 @@
             "destination": "/api/tweets"
         },
         {
+            "source": "/articles",
+            "destination": "/api/articles"
+        },
+        {
             "source": "/(.*)",
             "destination": "/api/404"
         }

@@ -3,9 +3,10 @@
  *  Created On 01 May 2021
  */
 
+import Joi from 'joi'
 import { Octokit } from '@octokit/rest'
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import Joi from 'joi'
+import { getCache, setCache } from '../../lib/prisma'
 
 import { cors } from '../index'
 import loop from './loop'
@@ -29,6 +30,16 @@ export default async (
 
     // parse query arguments
     const query = await querySchema.validateAsync(req.query)
+
+    // set the cache header to not cached by default
+    res.setHeader('m-cached', 'false')
+
+    // get from the cache
+    const cache = await getCache('projects', 10)
+    if (cache) {
+        res.setHeader('m-cached', 'true')
+        return res.status(200).json(cache)
+    }
 
     // initialize a new GitHub API class
     // while passing in the token
@@ -67,6 +78,9 @@ export default async (
     for (const repo of repos)
         queue.push(loop({ github, query, repo, returnable }))
     await Promise.all(queue)
+
+    // cache the response for next time
+    await setCache('projects', returnable)
 
     return res.status(200).json(returnable)
 }

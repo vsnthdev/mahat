@@ -26,6 +26,8 @@ export const getCache = async (name: string, timeoutMinutes: number) => {
         },
     })
 
+    if (!cache) return null
+
     const now = DateTime.now()
     const cachedAt = DateTime.fromJSDate(cache.cachedAt).plus({
         minutes: timeoutMinutes,

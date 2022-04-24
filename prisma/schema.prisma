@@ -1,0 +1,22 @@
+//
+//  Prisma schema for PlanetScale database.
+//  Learn more 👉 https://pris.ly/d/prisma-schema
+//  Created On 24 April 2022
+//
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+    provider             = "mysql"
+    url                  = env("DATABASE_URL")
+    referentialIntegrity = "prisma"
+}
+
+model Cache {
+    id       String    @unique
+    contents String    @db.VarChar(5000)
+    cachedAt DateTime? @default(now())
+}

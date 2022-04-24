@@ -10,6 +10,7 @@ import Joi from 'joi'
 import yaml from 'js-yaml'
 import path from 'path'
 import { TwitterClient } from 'twitter-api-client'
+import { getCache, setCache } from '../../lib/prisma'
 
 import { DataImpl } from './data'
 
@@ -74,6 +75,18 @@ export default async (
     // parse query arguments
     const query = await querySchema.validateAsync(req.query)
 
+    // set the cache header to not cached by default
+    res.setHeader('m-cached', 'false')
+
+    // get from the cache
+    const cache = await getCache('index', 10)
+    if (cache) {
+        if (query.avatar) return res.redirect(cache.avatar)
+
+        res.setHeader('m-cached', 'true')
+        return res.status(200).json(cache)
+    }
+
     // create an authenticated Twitter client
     const twitter = getTwitter()
 
@@ -103,6 +116,9 @@ export default async (
 
     // set the theme color
     data.themeColor = profile[0].profile_link_color
+
+    // cache the response for next time
+    await setCache('index', data)
 
     if (query.avatar) return res.redirect(data.avatar)
     return res.status(200).json(data)

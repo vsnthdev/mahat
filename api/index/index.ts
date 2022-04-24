@@ -99,6 +99,15 @@ export default async (
         screen_name: username,
     })
 
+    // fetch todoist productivity information
+    const { data: todoist } = await axios({
+        method: 'GET',
+        url: 'https://api.todoist.com/sync/v8/completed/get_stats',
+        headers: {
+            Authorization: `Bearer ${process.env.TODOIST_TOKEN}`,
+        },
+    })
+
     // get data
     const data = await getData()
 
@@ -116,6 +125,13 @@ export default async (
 
     // set the theme color
     data.themeColor = profile[0].profile_link_color
+
+    // insert details from todoist into the response
+    data.todoist.karma = todoist.karma
+    data.todoist.longestStreak = todoist.goals.max_daily_streak.count
+    data.todoist.completed.day = todoist.days_items[0].total_completed
+    data.todoist.completed.week = todoist.week_items[0].total_completed
+    data.todoist.completed.total = todoist.completed_count
 
     // cache the response for next time
     await setCache('index', data)

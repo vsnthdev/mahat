@@ -9,5 +9,14 @@ export interface DataImpl {
     avatar: string | null
     cover: string | null
     themeColor: string | null
+    todoist: {
+        karma: number | null
+        longestStreak: number | null
+        completed: {
+            day: number | null
+            week: number | null
+            total: number | null
+        }
+    }
     socials: string[]
 }

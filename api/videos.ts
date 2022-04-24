@@ -3,9 +3,10 @@
  *  Created On 22 April 2021
  */
 
-import { VercelRequest, VercelResponse } from '@vercel/node'
 import Joi from 'joi'
 import reader from 'rss-to-json'
+import { getCache, setCache } from '../lib/prisma'
+import { VercelRequest, VercelResponse } from '@vercel/node'
 
 import { cors } from './index'
 
@@ -29,6 +30,20 @@ export default async (
     // parse query arguments
     const query = await querySchema.validateAsync(req.query)
 
+    // set the cache header to not cached by default
+    res.setHeader('m-cached', 'false')
+
+    // get from the cache
+    const cache = await getCache('videos', 10)
+    if (cache) {
+        res.setHeader('m-cached', 'true')
+
+        if (query.latest)
+            return res.redirect(`https://youtu.be/${cache.resources[0].id}`)
+
+        return res.status(200).json(cache)
+    }
+
     const read = await reader(
         `https://www.youtube.com/feeds/videos.xml?channel_id=${ID}`,
         {},
@@ -49,6 +64,9 @@ export default async (
 
         returnable.resources.push(video)
     }
+
+    // cache the response for next time
+    await setCache('videos', returnable)
 
     if (query.latest)
         return res.redirect(`https://youtu.be/${returnable.resources[0].id}`)

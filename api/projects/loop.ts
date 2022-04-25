@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /*
- *  Loop through each project and return a presentable
- *  response.
+ *  Loop through each project and return a presentable response.
  *  Created On 02 May 2021
  */
 

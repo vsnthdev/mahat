@@ -17,6 +17,6 @@ datasource db {
 
 model Cache {
     id       String    @unique
-    contents String    @db.VarChar(5000)
+    contents String    @db.LongText
     cachedAt DateTime? @default(now())
 }

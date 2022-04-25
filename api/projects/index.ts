@@ -52,8 +52,8 @@ export default async (
         data: {
             followers,
             following,
-            public_repos: projects,
-            public_gists: gists,
+            public_repos: repoCount,
+            public_gists: gistCount,
         },
     } = await github.users.getAuthenticated()
     const { data: repos } = await github.repos.listForUser({
@@ -61,17 +61,29 @@ export default async (
         sort: 'updated',
         visibility: 'public',
     })
+    const { data: gists } = await github.gists.listForUser({
+        username: USER,
+    })
 
     // prepare the returnable response
     const returnable = {
         counts: {
             followers,
             following,
-            projects,
-            gists,
+            repoCount,
+            gistCount,
         },
+        gists: [],
         repositories: [],
     }
+
+    // populate public gists
+    for (const gist of gists.filter(gist => gist.public))
+        returnable.gists.push({
+            title: gist.description,
+            url: gist.html_url,
+            files: gist.files,
+        })
 
     // populate the repositories
     const queue = []
